@@ -1,0 +1,114 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateKendaraanInput {
+  hargaSewa: Float!
+  jenis: String!
+  merk: String!
+  model: String!
+  platNomor: String!
+  status: String!
+  tahun: Int!
+}
+
+input CreatePelangganInput {
+  alamat: String
+  email: String!
+  nama: String!
+  noTelepon: String!
+}
+
+input CreatePenyewaanInput {
+  kendaraanId: Int!
+  pelangganId: Int!
+  tanggalMulai: String!
+  tanggalSelesai: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type KendaraanType {
+  createdAt: DateTime!
+  hargaSewa: Float!
+  id: Int!
+  jenis: String!
+  merk: String!
+  model: String!
+  platNomor: String!
+  status: String!
+  tahun: Int!
+  updatedAt: DateTime!
+}
+
+type Mutation {
+  createKendaraan(input: CreateKendaraanInput!): KendaraanType!
+  createPelanggan(input: CreatePelangganInput!): PelangganType!
+  createPenyewaan(input: CreatePenyewaanInput!): PenyewaanType!
+  removeKendaraan(id: Int!): KendaraanType!
+  removePelanggan(id: Int!): PelangganType!
+  removePenyewaan(id: Int!): PenyewaanType!
+  updateKendaraan(id: Int!, input: UpdateKendaraanInput!): KendaraanType!
+  updatePelanggan(id: Int!, input: UpdatePelangganInput!): PelangganType!
+  updatePenyewaan(id: Int!, input: UpdatePenyewaanInput!): PenyewaanType!
+}
+
+type PelangganType {
+  alamat: String
+  createdAt: DateTime!
+  email: String!
+  id: Int!
+  nama: String!
+  noTelepon: String!
+  updatedAt: DateTime!
+}
+
+type PenyewaanType {
+  createdAt: DateTime!
+  id: Int!
+  kendaraan: KendaraanType!
+  kendaraanId: Int!
+  pelanggan: PelangganType!
+  pelangganId: Int!
+  status: String!
+  tanggalMulai: DateTime!
+  tanggalSelesai: DateTime!
+  totalBiaya: Float!
+  updatedAt: DateTime!
+}
+
+type Query {
+  kendaraan: [KendaraanType!]!
+  kendaraanById(id: Int!): KendaraanType
+  pelanggan: [PelangganType!]!
+  pelangganById(id: Int!): PelangganType
+  penyewaan: [PenyewaanType!]!
+  penyewaanById(id: Int!): PenyewaanType
+}
+
+input UpdateKendaraanInput {
+  hargaSewa: Float
+  jenis: String
+  merk: String
+  model: String
+  platNomor: String
+  status: String
+  tahun: Int
+}
+
+input UpdatePelangganInput {
+  alamat: String
+  email: String
+  nama: String
+  noTelepon: String
+}
+
+input UpdatePenyewaanInput {
+  kendaraanId: Int
+  pelangganId: Int
+  tanggalMulai: String
+  tanggalSelesai: String
+}

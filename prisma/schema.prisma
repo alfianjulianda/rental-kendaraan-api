@@ -1,0 +1,58 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Pelanggan {
+  id          Int         @id @default(autoincrement())
+  nama        String
+  email       String      @unique
+  noTelepon   String      @map("no_telepon")
+  alamat      String?
+  penyewaan   Penyewaan[]
+
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  @@map("pelanggan")
+}
+
+model Kendaraan {
+  id          Int         @id @default(autoincrement())
+  merk        String
+  model       String
+  tahun       Int
+  platNomor   String      @unique @map("plat_nomor")
+  jenis       String
+  hargaSewa   Decimal     @db.Decimal(12, 2) @map("harga_sewa")
+  status      String      @default("tersedia")
+  penyewaan   Penyewaan[]
+
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  @@map("kendaraan")
+}
+
+model Penyewaan {
+  id              Int       @id @default(autoincrement())
+  pelangganId     Int       @map("pelanggan_id")
+  kendaraanId     Int       @map("kendaraan_id")
+  tanggalMulai    DateTime  @map("tanggal_mulai")
+  tanggalSelesai  DateTime  @map("tanggal_selesai")
+  totalBiaya      Decimal   @db.Decimal(12, 2) @map("total_biaya")
+  status          String    @default("menunggu")
+
+  pelanggan       Pelanggan @relation(fields: [pelangganId], references: [id])
+  kendaraan       Kendaraan @relation(fields: [kendaraanId], references: [id])
+
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@map("penyewaan")
+}
